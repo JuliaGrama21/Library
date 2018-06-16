@@ -1,32 +1,21 @@
-package com.practice.library.model;
+package com.practice.library.dto;
 
-import javax.persistence.*;
-import java.io.Serializable;
 import java.util.List;
 
-@Entity
-@Table(name = "author")
-public class Author implements Serializable {
-    private static final long serialVersionUID = -3009157732242241606L;
+public class AuthorDTO {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
-
     private String firstName;
-
     private String lastName;
+    private List<String> booksName;
 
-    @OneToMany(mappedBy = "author")
-    private List<Book> books;
+    public AuthorDTO(){}
 
-    public Author(){}
-
-    public Author(Integer id, String firstName, String lastName, List<Book> books) {
+    public AuthorDTO(Integer id, String firstName, String lastName, List<String> booksName) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
-        this.books = books;
+        this.booksName = booksName;
     }
 
     public Integer getId() {
@@ -53,11 +42,11 @@ public class Author implements Serializable {
         this.lastName = lastName;
     }
 
-    public List<Book> getBooks() {
-        return books;
+    public List<String> getBooksName() {
+        return booksName;
     }
 
-    public void setBooks(List<Book> books) {
-        this.books = books;
+    public void setBooksName(List<String> booksName) {
+        this.booksName = booksName;
     }
 }
