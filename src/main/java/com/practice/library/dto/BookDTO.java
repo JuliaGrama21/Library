@@ -2,7 +2,7 @@ package com.practice.library.dto;
 
 public class BookDTO {
 
-    private Integer id;
+    private Long id;
     private String name;
     private String authorName;
     private String genre;
@@ -10,19 +10,11 @@ public class BookDTO {
 
     public BookDTO() {}
 
-    public BookDTO(Integer id, String name, String authorName, String genre, String year) {
-        this.id = id;
-        this.name = name;
-        this.authorName = authorName;
-        this.genre = genre;
-        this.year = year;
-    }
-
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

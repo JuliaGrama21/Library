@@ -4,25 +4,18 @@ import java.util.List;
 
 public class AuthorDTO {
 
-    private Integer id;
+    private Long id;
     private String firstName;
     private String lastName;
     private List<String> booksName;
 
     public AuthorDTO(){}
 
-    public AuthorDTO(Integer id, String firstName, String lastName, List<String> booksName) {
-        this.id = id;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.booksName = booksName;
-    }
-
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

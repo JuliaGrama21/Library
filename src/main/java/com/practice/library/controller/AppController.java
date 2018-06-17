@@ -8,14 +8,17 @@ import com.practice.library.model.Book;
 import com.practice.library.repository.AuthorRepository;
 import com.practice.library.repository.BookRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@RestController
-public class Controller {
+@Controller
+public class AppController {
 
     @Autowired
     private AuthorRepository authorRepository;
@@ -23,14 +26,14 @@ public class Controller {
     @Autowired
     private BookRepository bookRepository;
 
-
     @Autowired
     private Mapper<AuthorDTO, Author> authorMapper;
 
     @Autowired
     private Mapper<BookDTO, Book> bookMapper;
 
-    @RequestMapping("/books")
+    @RequestMapping("/getBooks")
+    @ResponseBody
     public List<BookDTO> getBooks() {
         List<Book> books = bookRepository.findAll();
         List<BookDTO> booksDTO = new ArrayList<>();
@@ -42,7 +45,8 @@ public class Controller {
         return booksDTO;
     }
 
-    @RequestMapping("/authors")
+    @RequestMapping("/getAuthors")
+    @ResponseBody
     public List<AuthorDTO> getAuthors() {
         List<Author> authors = authorRepository.findAll();
         List<AuthorDTO> authorsDTO = new ArrayList<>();
@@ -52,5 +56,30 @@ public class Controller {
             authorsDTO.add(authorDTO);
         });
         return authorsDTO;
+    }
+
+    @RequestMapping("/updateAuthor")
+    @ResponseBody
+    public AuthorDTO updateAuthor(@RequestBody AuthorDTO authorDTO) {
+        Author authorFromDto = authorMapper.fromDto(authorDTO);
+        return authorMapper.toDto(authorRepository.save(authorFromDto));
+    }
+
+    @RequestMapping("/deleteAuthor")
+    @ResponseBody
+    public String updateAuthor(@RequestBody Long authorId) {
+        authorRepository.deleteById(authorId);
+
+        return "success";
+    }
+
+    @RequestMapping("/authors")
+    public String authors() {
+        return "authors.html";
+    }
+
+    @RequestMapping("/books")
+    public String books() {
+        return "books.html";
     }
 }

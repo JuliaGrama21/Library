@@ -7,12 +7,11 @@ import java.io.Serializable;
 
 @Entity
 @Table(name="books")
-public class Book implements Serializable {
-    private static final long serialVersionUID = -3009157732242241606L;
+public class Book {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer id;
+    private Long id;
 
     private String name;
 
@@ -26,25 +25,6 @@ public class Book implements Serializable {
     private String genre;
 
     public Book() {
-    }
-
-    public Book(String name, Author author, String publicationYear, String genre) {
-        this.name = name;
-        this.author = author;
-        this.publicationYear = publicationYear;
-        this.genre = genre;
-    }
-
-    public static long getSerialVersionUID() {
-        return serialVersionUID;
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
     }
 
     public String getName() {

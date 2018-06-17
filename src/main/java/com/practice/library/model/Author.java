@@ -1,39 +1,30 @@
 package com.practice.library.model;
 
 import javax.persistence.*;
-import java.io.Serializable;
 import java.util.List;
 
 @Entity
 @Table(name = "author")
-public class Author implements Serializable {
-    private static final long serialVersionUID = -3009157732242241606L;
+public class Author {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer id;
+    private Long id;
 
     private String firstName;
 
     private String lastName;
 
-    @OneToMany(mappedBy = "author")
+    @OneToMany(mappedBy = "author", cascade = CascadeType.ALL)
     private List<Book> books;
 
     public Author(){}
 
-    public Author(Integer id, String firstName, String lastName, List<Book> books) {
-        this.id = id;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.books = books;
-    }
-
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

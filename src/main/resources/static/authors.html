@@ -2,10 +2,57 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" type="text/css" href="style.css">
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
     <title>authors</title>
 </head>
-<body>
-        <h2>Автори</h2>
+<body ng-app="authorsApp">
+<div class="container" ng-controller="authorsCtrl">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-default">
+                <h2>Автори</h2>
+                <div class="panel-body">
+                    <table id="authorsTable" class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th>Номер</th>
+                            <th>Ім'я</th>
+                            <th>Прізвище</th>
+                            <th>Список книг</th>
+                            <th></th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="author in authors">
+                            <td>{{author.id == -1 ? '' : author.id}}</td>
+
+                            <td ng-model="author.firstName" ng-if="!author.edit">{{author.firstName}}</td>
+                            <td ng-model="author.lastName" ng-if="!author.edit">{{author.lastName}}</td>
+
+                            <td ng-if="author.edit"><input ng-model="author.firstName" type="text"></td>
+                            <td ng-if="author.edit"><input ng-model="author.lastName" type="text"></td>
+
+                            <td ng-bind-html="wrapBooksNames(author.booksName)"></td>
+                            <td align="center"><img ng-click="editAuthor(author)" class="img" src="images/edit.png"></td>
+                            <td align="center"><img ng-click="deleteAuthor(author)" class="img" src="images/delete.png"></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <div style="width: 100%">
+                        <button class="button btn-success" ng-click="addAuthor()">
+                            Додати автора
+                        </button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript" src="/js/angular.min.js"></script>
+<script type="text/javascript" src="/js/authors.js"></script>
 </body>
 </html>

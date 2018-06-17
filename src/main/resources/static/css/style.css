@@ -1,0 +1,23 @@
+h2 {
+    text-align: center;
+}
+
+table, th, td {
+    border: 1px solid black;
+}
+
+table {
+    margin-top: 20px;
+}
+
+.container {
+    margin-top: 30px;
+}
+
+.img {
+    width: 25px;
+    height: 25px;
+}
+button{
+    float: right;
+}
