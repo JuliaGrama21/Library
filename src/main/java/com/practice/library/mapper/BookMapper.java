@@ -20,7 +20,9 @@ public class BookMapper implements Mapper<BookDTO, Book>{
 
     @Override
     public Book fromDto(BookDTO bookDTO) {
-        return Mapper.MODEL_MAPPER.map(bookDTO, Book.class);
+        Book book = Mapper.MODEL_MAPPER.map(bookDTO, Book.class);
+        book.setPublicationYear(bookDTO.getYear());
+        return book;
     }
 
 }

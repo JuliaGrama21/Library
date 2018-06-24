@@ -1,6 +1,7 @@
 package com.practice.library.controller;
 
 import com.practice.library.dto.AuthorDTO;
+import com.practice.library.dto.AuthorNameDTO;
 import com.practice.library.dto.BookDTO;
 import com.practice.library.mapper.Mapper;
 import com.practice.library.model.Author;
@@ -11,7 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.ArrayList;
@@ -31,6 +31,9 @@ public class AppController {
 
     @Autowired
     private Mapper<BookDTO, Book> bookMapper;
+
+    @Autowired
+    private Mapper<AuthorNameDTO, Author> authorNameMapper;
 
     @RequestMapping("/getBooks")
     @ResponseBody
@@ -58,6 +61,19 @@ public class AppController {
         return authorsDTO;
     }
 
+    @RequestMapping("/getAuthorsNames")
+    @ResponseBody
+    public List<AuthorNameDTO> getAuthorsNames() {
+        List<Author> authors = authorRepository.findAll();
+        List<AuthorNameDTO> authorsNamesDTO = new ArrayList<>();
+
+        authors.forEach(author -> {
+            AuthorNameDTO authorNameDTO = authorNameMapper.toDto(author);
+            authorsNamesDTO.add(authorNameDTO);
+        });
+        return authorsNamesDTO;
+    }
+
     @RequestMapping("/updateAuthor")
     @ResponseBody
     public AuthorDTO updateAuthor(@RequestBody AuthorDTO authorDTO) {
@@ -65,9 +81,19 @@ public class AppController {
         return authorMapper.toDto(authorRepository.save(authorFromDto));
     }
 
+    @RequestMapping("/updateBook")
+    @ResponseBody
+    public BookDTO updateBook(@RequestBody BookDTO bookDTO) {
+        Book bookFromDto = bookMapper.fromDto(bookDTO);
+        String authorName = bookDTO.getAuthorName();
+        String[] names = authorName.split(" ");
+        bookFromDto.setAuthor(authorRepository.getAuthorByFirstNameAndLastName(names[0], names[1]));
+        return bookMapper.toDto(bookRepository.save(bookFromDto));
+    }
+
     @RequestMapping("/deleteAuthor")
     @ResponseBody
-    public String updateAuthor(@RequestBody Long authorId) {
+    public String deleteAuthor(@RequestBody Long authorId) {
         authorRepository.deleteById(authorId);
 
         return "success";

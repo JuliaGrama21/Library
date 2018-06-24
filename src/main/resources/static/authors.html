@@ -31,8 +31,8 @@
                             <td ng-model="author.firstName" ng-if="!author.edit">{{author.firstName}}</td>
                             <td ng-model="author.lastName" ng-if="!author.edit">{{author.lastName}}</td>
 
-                            <td ng-if="author.edit"><input ng-model="author.firstName" type="text"></td>
-                            <td ng-if="author.edit"><input ng-model="author.lastName" type="text"></td>
+                            <td ng-if="author.edit"><input class="form-control" ng-model="author.firstName" type="text"></td>
+                            <td ng-if="author.edit"><input class="form-control" ng-model="author.lastName" type="text"></td>
 
                             <td ng-bind-html="wrapBooksNames(author.booksName)"></td>
                             <td align="center"><img ng-click="editAuthor(author)" class="img" src="images/edit.png"></td>

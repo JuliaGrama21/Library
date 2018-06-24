@@ -2,9 +2,63 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Books</title>
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+    <title>books</title>
 </head>
-<body>
+<body ng-app="booksApp">
+<div class="container" ng-controller="booksCtrl">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-default">
+                <h2>Книги</h2>
+                <div class="panel-body">
+                    <table id="booksTable" class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th>Номер</th>
+                            <th>Назва книги</th>
+                            <th>Жанр</th>
+                            <th>Рік публікації</th>
+                            <th>Автор</th>
+                            <th></th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="book in books">
+                            <td>{{book.id == -1 ? '' : book.id}}</td>
 
+                            <td ng-model="book.name" ng-if="!book.edit">{{book.name}}</td>
+                            <td ng-model="book.genre" ng-if="!book.edit">{{book.genre}}</td>
+                            <td ng-model="book.year" ng-if="!book.edit">{{book.year}}</td>
+                            <td ng-model="book.authorName" ng-if="!book.edit"  ng-bind-html="wrapAuthorName(book.authorName)"></td>
+
+                            <td ng-if="book.edit"><input class="form-control" ng-model="book.name" type="text"></td>
+                            <td ng-if="book.edit"><input class="form-control" ng-model="book.genre" type="text"></td>
+                            <td ng-if="book.edit"><input class="form-control" ng-model="book.year" type="text"></td>
+                            <td ng-if="book.edit" ng-model="book.authorName">
+                                <select class="form-control" ng-model="selected" ng-change="switchAuthor(selected.fullName, book)" ng-options="authorName as authorName.fullName for authorName in authorsNames track by authorName.id"></select>
+                            </td>
+
+                            <td align="center"><img ng-click="editBook(book)" class="img" src="images/edit.png"></td>
+                            <td align="center"><img ng-click="deleteBook(book)" class="img" src="images/delete.png"></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <div style="width: 100%">
+                        <button class="button btn-success" ng-click="addBook()">
+                            Додати книгу
+                        </button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript" src="/js/angular.min.js"></script>
+<script type="text/javascript" src="/js/books.js"></script>
 </body>
 </html>
